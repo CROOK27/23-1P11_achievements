@@ -21,15 +21,15 @@ class Student (Table):
     user = ForeignKeyField(User, backref='student',on_delete="CASCADE",on_update="CASCADE")
     add_teacher = ForeignKeyField(Teacher, on_delete="CASCADE", on_update="CASCADE")
 
-class Acc (Table):
+class Achievement (Table):
     titel = CharField()
     description = CharField()
     image = CharField()
 
-class GiveAcc (Table):
-    teacher = ForeignKeyField(Teacher, backref='giveacc',on_delete="CASCADE",on_update="CASCADE")
-    student = ForeignKeyField(Student, backref='giveacc',on_delete="CASCADE",on_update="CASCADE")
-    acc = ForeignKeyField(Acc, backref='giveacc',on_delete="CASCADE",on_update="CASCADE")
+class GiveAchievement (Table):
+    teacher = ForeignKeyField(Teacher, backref='giveachievement',on_delete="CASCADE",on_update="CASCADE")
+    student = ForeignKeyField(Student, backref='giveachievement',on_delete="CASCADE",on_update="CASCADE")
+    achievement = ForeignKeyField(Acc, backref='giveachievement',on_delete="CASCADE",on_update="CASCADE")
     date_time = CharField()
 
 
