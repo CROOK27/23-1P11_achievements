@@ -1,4 +1,4 @@
-from peewee import SqliteDatabase, Model,CharField,ForeignKeyField
+from peewee import SqliteDatabase, Model,CharField,ForeignKeyField,BooleanField
 
 db = SqliteDatabase('sqlite.db')
 
@@ -9,9 +9,12 @@ class Table(Model):
         database = db
 
 class User (Table):
-    login = CharField()
+    username = CharField()
+    login = CharField(unique=True)
     password = CharField()
-    full_name = CharField()
+    active = BooleanField(default=True)
+
+    
 
 class Teacher (Table):
     user = ForeignKeyField(User, backref='teacher',on_delete="CASCADE", on_update="CASCADE")
@@ -29,11 +32,11 @@ class Achievement (Table):
 class GiveAchievement (Table):
     teacher = ForeignKeyField(Teacher, backref='giveachievement',on_delete="CASCADE",on_update="CASCADE")
     student = ForeignKeyField(Student, backref='giveachievement',on_delete="CASCADE",on_update="CASCADE")
-    achievement = ForeignKeyField(Acc, backref='giveachievement',on_delete="CASCADE",on_update="CASCADE")
+    achievement = ForeignKeyField(Achievement, backref='giveachievement',on_delete="CASCADE",on_update="CASCADE")
     date_time = CharField()
 
 
 if __name__ == "__main__":
     db.connect()
-    db.create_tables([User,Teacher,Student,Acc,GiveAcc], safe=True)
+    db.create_tables([User,Teacher,Student,Achievement,GiveAchievement], safe=True)
     db.close()
